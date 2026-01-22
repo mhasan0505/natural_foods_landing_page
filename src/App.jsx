@@ -12,7 +12,9 @@ const App = () => {
   const [cartCount, setCartCount] = useState(0);
   const [currentPage, setCurrentPage] = useState("home"); // "home", "admin-login", or "admin"
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [orders, setOrders] = useState([
+
+  // Default orders for initial load
+  const defaultOrders = [
     {
       id: "ORD-001",
       date: "২০২৬-০১-২০",
@@ -61,7 +63,18 @@ const App = () => {
       status: "নতুন অর্ডার",
       address: "খুলনা, বাংলাদেশ",
     },
-  ]);
+  ];
+
+  // Load orders from localStorage or use default
+  const [orders, setOrders] = useState(() => {
+    const savedOrders = localStorage.getItem("orders");
+    return savedOrders ? JSON.parse(savedOrders) : defaultOrders;
+  });
+
+  // Save orders to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("orders", JSON.stringify(orders));
+  }, [orders]);
 
   const handleAddToCart = () => {
     setCartCount(cartCount + 1);
