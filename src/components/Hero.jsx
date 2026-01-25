@@ -25,8 +25,8 @@ const Hero = () => {
               width="100%"
               className="w-full bg-gray-900"
             >
-              <source src="/public/Chia Seeds Video.mp4" type="video/mp4" />
-              <source src="/public/Chia Seeds Video.webm" type="video/mp4" />
+              <source src="/Chia Seeds Video.mp4" type="video/mp4" />
+              <source src="/Chia Seeds Video.webm" type="video/mp4" />
             </video>
           </div>
 

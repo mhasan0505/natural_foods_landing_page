@@ -80,7 +80,7 @@ const Features = () => {
               চিয়া সিডের উপকারিতা
             </p>
             <img
-              src="/public/চিয়া সিড.png"
+              src="/চিয়া সিড.png"
               alt="line"
               className="mx-auto mt-6"
             />
