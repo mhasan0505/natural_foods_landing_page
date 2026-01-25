@@ -47,7 +47,7 @@ const OrderList = ({ orders }) => {
     <div className="bg-white rounded-lg shadow overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+          <thead className="bg-linear-to-r from-blue-500 to-blue-600 text-white">
             <tr>
               <th className="px-4 py-3 text-left font-semibold">অর্ডার আইডি</th>
               <th className="px-4 py-3 text-left font-semibold">গ্রাহক</th>

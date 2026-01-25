@@ -4,10 +4,9 @@ import AdminLogin from "./components/AdminLogin";
 import CTA from "./components/CTA";
 import Features from "./components/Features";
 import Footer from "./components/Footer";
-import Hero from "./components/Hero";
 import Pricing from "./components/Pricing";
 import Reviews from "./components/Reviews";
-
+import Hero from "./components/Hero";
 const App = () => {
   const [cartCount, setCartCount] = useState(0);
   const [currentPage, setCurrentPage] = useState("home"); // "home", "admin-login", or "admin"
@@ -136,7 +135,7 @@ const App = () => {
   // Home Page
   return (
     <div className="bg-white min-h-screen">
-      <header className="p-4 sticky top-0 z-50 shadow-lg">
+      <header className="p-4 top-0 z-50 shadow-lg">
         <div>
           <img
             src="/logo.png"
@@ -144,21 +143,21 @@ const App = () => {
             className="mx-auto w-32 h-auto"
           />
         </div>
-        <div className="container mx-auto flex justify-between items-center">
+        {/* <div className="container mx-auto flex justify-between items-center bg-red-500">
           <div className="flex items-center gap-4">
             <button className="bg-white text-green-700 px-4 py-2 rounded-full font-semibold hover:bg-green-50 transition">
               🛒 ({cartCount})
             </button>
           </div>
-        </div>
+        </div> */}
       </header>
 
       <main>
         <Hero onAddToCart={handleAddToCart} />
         <Features />
-        <Pricing onAddToCart={handleAddToCart} />
         <Reviews />
-        <CTA onAddToCart={handleAddToCart} />
+        <Pricing onAddToCart={handleAddToCart} />
+        {/* <CTA onAddToCart={handleAddToCart} /> */}
       </main>
 
       <Footer />

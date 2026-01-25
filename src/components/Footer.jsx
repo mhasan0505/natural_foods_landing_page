@@ -72,8 +72,8 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold mb-4">যোগাযোগ করুন</h4>
             <div className="space-y-2 text-gray-400">
-              <p>📞 +৮৮০ ১৭XX-XXXXXX</p>
-              <p>📧 info@chiaseeds.bd</p>
+              <p>📞 +৮৮ ০১৭০০০০০০</p>
+              <p>📧 info@naturalsfoodsbd.com</p>
               <p>📍 ঢাকা, বাংলাদেশ</p>
               <div className="flex gap-4 mt-4">
                 <a href="#" className="hover:text-green-500 transition text-xl">
