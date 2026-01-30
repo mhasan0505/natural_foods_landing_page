@@ -22,7 +22,6 @@ const ProtectedRoute = ({ isAuthenticated, children }) => {
 };
 
 const HomePage = ({ onAddToCart }) => {
-  const navigate = useNavigate();
 
   return (
     <div className="bg-white min-h-screen">
@@ -33,12 +32,12 @@ const HomePage = ({ onAddToCart }) => {
             alt="Natural Foods Logo"
             className="w-32 h-auto"
           />
-          <button
+          {/* <button
             onClick={() => navigate("/admin-login")}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
           >
             🔑 অ্যাডমিন
-          </button>
+          </button> */}
         </div>
       </header>
 
