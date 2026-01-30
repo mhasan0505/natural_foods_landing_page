@@ -1,16 +1,67 @@
-# React + Vite
+# Natural Foods Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Backend Setup (MongoDB + Real-time Updates)
 
-Currently, two official plugins are available:
+### 1. Start MongoDB
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Ensure MongoDB is running locally or use MongoDB Atlas. The app expects a connection string.
 
-## React Compiler
+### 2. Configure Backend Environment
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Navigate to the server directory and create `.env`:
 
-## Expanding the ESLint configuration
+```bash
+cd server
+cp .env.example .env
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Update `.env` with your MongoDB connection:
+
+```bash
+MONGODB_URI=mongodb://localhost:27017/nautral_foods
+PORT=4000
+```
+
+### 3. Install Backend Dependencies
+
+```bash
+pnpm install
+```
+
+### 4. Start the Backend Server
+
+```bash
+pnpm dev
+```
+
+The server runs on `http://localhost:4000` with these endpoints:
+
+- `GET /orders` - Fetch all orders
+- `POST /orders` - Create new order
+- `GET /orders/stream` - Real-time SSE updates
+- `GET /health` - Health check
+
+### 5. Configure Frontend API URL
+
+In the root directory, update `.env`:
+
+```bash
+VITE_API_URL=http://localhost:4000
+VITE_WEB3FORMS_KEY=your-web3forms-access-key
+```
+
+### 6. Start Frontend
+
+```bash
+cd ..
+pnpm dev --host
+```
+
+## Email Notifications
+
+Order submissions send emails via Web3Forms:
+
+1. Create a free Web3Forms account and copy your `Access Key`
+1. Set `VITE_WEB3FORMS_KEY` in `.env` (see step 5 above)
+
+If the key is missing, orders are still saved but emails are skipped.

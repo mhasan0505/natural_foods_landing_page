@@ -1,6 +1,6 @@
 # 🔐 Admin Route - Password Protected Setup Guide
 
-## ✅ Implementation Complete!
+## ✅ Implementation Complete
 
 Your e-commerce application now has a **separate, password-protected admin route** with full authentication and session management.
 
@@ -44,9 +44,9 @@ Three main routes:
 
 ## 🔑 Login Credentials
 
-### Default Password:
+### Default Password
 
-```
+```text
 Password: admin123
 ```
 
@@ -56,7 +56,7 @@ Password: admin123
 
 ## 🔄 User Flow
 
-```
+```text
 Landing Page (Home)
         ↓
 Click "📊 অ্যাডমিন" button
@@ -76,7 +76,7 @@ Back to Home Page
 
 ## 📁 File Structure
 
-```
+```text
 src/
 ├── App.jsx                    (Main routing & authentication)
 ├── components/
@@ -181,7 +181,7 @@ Edit `AdminLogin.jsx` - change Tailwind color classes:
 
 ```jsx
 // Change from blue-600 to another color
-className = "bg-gradient-to-br from-purple-600 to-purple-800";
+className = "bg-linear-to-br from-purple-600 to-purple-800";
 ```
 
 ### 2. Change logout button location
@@ -203,7 +203,7 @@ Consider adding:
 
 Your app is running at:
 
-```
+```text
 http://localhost:5174/
 ```
 
@@ -218,21 +218,6 @@ http://localhost:5174/
 
 ---
 
-**Setup Complete! 🎉**
-
-Your admin panel is now password-protected and ready to use!
-
----
-
-## 📞 Support Notes
-
-- Password validation is case-sensitive
-- Session expires only on logout or clearing localStorage
-- Admin panel has full CRUD operations for orders
-- All functionality is in Bangla language
-
----
-
-**Setup Complete! 🎉**
+## Setup Complete 🎉
 
 Your admin panel is now password-protected and ready to use!

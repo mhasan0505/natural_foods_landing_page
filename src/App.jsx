@@ -1,105 +1,146 @@
 import { useEffect, useState } from "react";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import AdminDashboard from "./components/AdminDashboard";
 import AdminLogin from "./components/AdminLogin";
-import CTA from "./components/CTA";
 import Features from "./components/Features";
 import Footer from "./components/Footer";
+import Hero from "./components/Hero";
 import Pricing from "./components/Pricing";
 import Reviews from "./components/Reviews";
-import Hero from "./components/Hero";
-const App = () => {
+
+const ProtectedRoute = ({ isAuthenticated, children }) => {
+  if (!isAuthenticated) {
+    return <Navigate to="/admin-login" replace />;
+  }
+  return children;
+};
+
+const HomePage = ({ onAddToCart }) => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="bg-white min-h-screen">
+      <header className="p-4 top-0 z-50 shadow-lg">
+        <div className="container mx-auto flex justify-between items-center">
+          <img
+            src="/logo.png"
+            alt="Natural Foods Logo"
+            className="w-32 h-auto"
+          />
+          <button
+            onClick={() => navigate("/admin-login")}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+          >
+            🔑 অ্যাডমিন
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <Hero onAddToCart={onAddToCart} />
+        <Features />
+        <Reviews />
+        <Pricing onAddToCart={onAddToCart} />
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+const AppRoutes = () => {
   const [cartCount, setCartCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState("home"); // "home", "admin-login", or "admin"
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    () => localStorage.getItem("adminAuth") === "true",
+  );
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
-  // Default orders for initial load
-  const defaultOrders = [
-    {
-      id: "ORD-001",
-      date: "২০২৬-০১-২০",
-      customer: "ফাতেমা আক্তার",
-      email: "fatema@example.com",
-      phone: "01712345678",
-      product: "চিয়া সিড ১ কেজি",
-      quantity: 2,
-      amount: 1198,
-      status: "ডেলিভারি সম্পন্ন",
-      address: "ঢাকা, বাংলাদেশ",
-    },
-    {
-      id: "ORD-002",
-      date: "২০২৬-০১-২১",
-      customer: "করিম খান",
-      email: "karim@example.com",
-      phone: "01812345678",
-      product: "চিয়া সিড ২৫০ গ্রাম",
-      quantity: 1,
-      amount: 210,
-      status: "ডেলিভারিতে",
-      address: "চট্টগ্রাম, বাংলাদেশ",
-    },
-    {
-      id: "ORD-003",
-      date: "২০২৬-০১-২২",
-      customer: "সুমাইয়া বেগম",
-      email: "sumaiya@example.com",
-      phone: "01912345678",
-      product: "চিয়া সিড ৩ কেজি",
-      quantity: 1,
-      amount: 1699,
-      status: "প্রস্তুতিতে",
-      address: "সিলেট, বাংলাদেশ",
-    },
-    {
-      id: "ORD-004",
-      date: "२০२६-०१-२३",
-      customer: "রহিম সাহেব",
-      email: "rahim@example.com",
-      phone: "01412345678",
-      product: "চিয়া সিড ১ কেজি",
-      quantity: 1,
-      amount: 599,
-      status: "নতুন অর্ডার",
-      address: "খুলনা, বাংলাদেশ",
-    },
-  ];
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
-  // Load orders from localStorage or use default
-  const [orders, setOrders] = useState(() => {
-    const savedOrders = localStorage.getItem("orders");
-    return savedOrders ? JSON.parse(savedOrders) : defaultOrders;
-  });
-
-  // Save orders to localStorage whenever they change
+  // Fetch orders from backend on mount
   useEffect(() => {
-    localStorage.setItem("orders", JSON.stringify(orders));
-  }, [orders]);
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch(`${API_URL}/orders`);
+        if (response.ok) {
+          const data = await response.json();
+          setOrders(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch orders:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, [API_URL]);
+
+  // Real-time updates via EventSource
+  useEffect(() => {
+    const eventSource = new EventSource(`${API_URL}/orders/stream`);
+
+    eventSource.onmessage = (event) => {
+      const payload = JSON.parse(event.data);
+
+      if (payload.type === "order-created") {
+        setOrders((prev) => [payload.data, ...prev]);
+      } else if (payload.type === "order-updated") {
+        setOrders((prev) =>
+          prev.map((o) => (o.id === payload.data.id ? payload.data : o)),
+        );
+      } else if (payload.type === "order-deleted") {
+        setOrders((prev) => prev.filter((o) => o.id !== payload.data.id));
+      }
+    };
+
+    eventSource.onerror = () => {
+      console.warn("SSE connection error. Retrying...");
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [API_URL]);
 
   const handleAddToCart = () => {
     setCartCount(cartCount + 1);
   };
 
-  const handleAddOrder = (newOrder) => {
-    setOrders([...orders, newOrder]);
+  const handleAddOrder = async (newOrder) => {
+    try {
+      const response = await fetch(`${API_URL}/orders`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newOrder),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create order");
+      }
+
+      // SSE will handle adding to state
+    } catch (error) {
+      console.error("Failed to add order:", error);
+      throw error;
+    }
   };
 
-  // Check if user is already authenticated
-  useEffect(() => {
-    const savedAuth = localStorage.getItem("adminAuth");
-    if (savedAuth === "true") {
-      // Avoid cascading renders by using a callback
-      Promise.resolve().then(() => {
-        setIsAuthenticated(true);
-      });
-    }
-  }, []);
-
   const handleAdminLogin = (password) => {
-    const ADMIN_PASSWORD = "admin123"; // Change this to your desired password
+    const ADMIN_PASSWORD = "admin123";
     if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
       localStorage.setItem("adminAuth", "true");
-      setCurrentPage("admin");
+      navigate("/admin");
       return true;
     }
     return false;
@@ -108,61 +149,40 @@ const App = () => {
   const handleAdminLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem("adminAuth");
-    setCurrentPage("home");
+    navigate("/");
   };
 
-  // Admin Login Page
-  if (currentPage === "admin-login") {
-    return (
-      <AdminLogin
-        onLogin={handleAdminLogin}
-        onBack={() => setCurrentPage("home")}
-      />
-    );
-  }
-
-  // Admin Dashboard Page
-  if (currentPage === "admin" && isAuthenticated) {
-    return (
-      <AdminDashboard
-        orders={orders}
-        onAddOrder={handleAddOrder}
-        onLogout={handleAdminLogout}
-      />
-    );
-  }
-
-  // Home Page
   return (
-    <div className="bg-white min-h-screen">
-      <header className="p-4 top-0 z-50 shadow-lg">
-        <div>
-          <img
-            src="/logo.png"
-            alt="Natural Foods Logo"
-            className="mx-auto w-32 h-auto"
-          />
-        </div>
-        {/* <div className="container mx-auto flex justify-between items-center bg-red-500">
-          <div className="flex items-center gap-4">
-            <button className="bg-white text-green-700 px-4 py-2 rounded-full font-semibold hover:bg-green-50 transition">
-              🛒 ({cartCount})
-            </button>
-          </div>
-        </div> */}
-      </header>
-
-      <main>
-        <Hero onAddToCart={handleAddToCart} />
-        <Features />
-        <Reviews />
-        <Pricing onAddToCart={handleAddToCart} />
-        {/* <CTA onAddToCart={handleAddToCart} /> */}
-      </main>
-
-      <Footer />
-    </div>
+    <Routes>
+      <Route path="/" element={<HomePage onAddToCart={handleAddToCart} />} />
+      <Route
+        path="/admin-login"
+        element={
+          <AdminLogin onLogin={handleAdminLogin} onBack={() => navigate("/")} />
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute isAuthenticated={isAuthenticated}>
+            <AdminDashboard
+              orders={orders}
+              onAddOrder={handleAddOrder}
+              onLogout={handleAdminLogout}
+              isLoading={isLoading}
+            />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 };
+
+const App = () => (
+  <Router>
+    <AppRoutes />
+  </Router>
+);
 
 export default App;

@@ -44,10 +44,10 @@ const OrderList = ({ orders }) => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden">
+    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-linear-to-r from-blue-500 to-blue-600 text-white">
+          <thead className="bg-gray-50 text-gray-600 border-b border-gray-200">
             <tr>
               <th className="px-4 py-3 text-left font-semibold">অর্ডার আইডি</th>
               <th className="px-4 py-3 text-left font-semibold">গ্রাহক</th>
@@ -71,9 +71,9 @@ const OrderList = ({ orders }) => {
               orders.map((order, index) => (
                 <tr
                   key={index}
-                  className="border-b hover:bg-gray-50 transition"
+                  className="border-b border-gray-100 hover:bg-gray-50 transition"
                 >
-                  <td className="px-4 py-3 font-bold text-blue-600">
+                  <td className="px-4 py-3 font-semibold text-gray-900">
                     {order.id}
                   </td>
                   <td className="px-4 py-3">
@@ -88,7 +88,7 @@ const OrderList = ({ orders }) => {
                       {order.quantity}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-right font-bold text-green-700">
+                  <td className="px-4 py-3 text-right font-semibold text-gray-900">
                     ৳{order.amount}
                   </td>
                   <td className="px-4 py-3 text-gray-700 text-sm">
@@ -104,7 +104,7 @@ const OrderList = ({ orders }) => {
                   <td className="px-4 py-3 text-center">
                     <button
                       onClick={() => setSelectedOrder(order)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-semibold transition"
+                      className="px-3 py-1 rounded-lg text-sm font-semibold text-white bg-gray-900 hover:bg-black transition"
                     >
                       দেখুন
                     </button>

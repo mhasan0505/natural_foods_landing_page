@@ -2,7 +2,7 @@ import { useState } from "react";
 import OrderForm from "./OrderForm";
 import OrderList from "./OrderList";
 
-const AdminDashboard = ({ orders, onAddOrder, onLogout }) => {
+const AdminDashboard = ({ orders, onAddOrder, onLogout, isLoading }) => {
   const [activeTab, setActiveTab] = useState("orders");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("সব");
@@ -25,142 +25,145 @@ const AdminDashboard = ({ orders, onAddOrder, onLogout }) => {
     return matchesSearch && matchesStatus;
   });
 
-  const getStatistics = () => {
-    return {
-      total: orders.length,
-      pending: orders.filter((o) => o.status === "নতুন অর্ডার").length,
-      processing: orders.filter((o) => o.status === "প্রস্তুতিতে").length,
-      shipping: orders.filter((o) => o.status === "ডেলিভারিতে").length,
-      completed: orders.filter((o) => o.status === "ডেলিভারি সম্পন্ন").length,
-      totalRevenue: orders.reduce((sum, order) => sum + order.amount, 0),
-    };
+  const stats = {
+    total: orders.length,
+    pending: orders.filter((o) => o.status === "নতুন অর্ডার").length,
+    processing: orders.filter((o) => o.status === "প্রস্তুতিতে").length,
+    shipping: orders.filter((o) => o.status === "ডেলিভারিতে").length,
+    completed: orders.filter((o) => o.status === "ডেলিভারি সম্পন্ন").length,
   };
 
-  const stats = getStatistics();
+  const statCards = [
+    { label: "মোট অর্ডার", value: stats.total, accent: "#111827", icon: "📦" },
+    { label: "নতুন", value: stats.pending, accent: "#2563eb", icon: "🆕" },
+    {
+      label: "প্রসেসিং",
+      value: stats.processing,
+      accent: "#f59e0b",
+      icon: "⚙️",
+    },
+    { label: "সম্পন্ন", value: stats.completed, accent: "#059669", icon: "✅" },
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <header className="bg-linear-to-r from-blue-600 to-blue-800 text-white p-4 shadow-lg">
-        <div className="container mx-auto flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold">অ্যাডমিন ড্যাশবোর্ড</h1>
-            <p className="text-blue-100 text-sm">অর্ডার ম্যানেজমেন্ট সিস্টেম</p>
+    <div className="min-h-screen bg-[#f6f7fb] text-gray-900">
+      <header className="bg-white border-b border-gray-200">
+        <div className="container mx-auto flex items-center justify-between px-6 py-4">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-lg bg-gray-900 text-white flex items-center justify-center font-bold">
+              NF
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-[0.2em] text-gray-500">
+                Dashboard
+              </p>
+              <h1 className="text-xl font-semibold">অর্ডার কন্ট্রোল সেন্টার</h1>
+            </div>
           </div>
           <button
             onClick={onLogout}
-            className="bg-red-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-600 transition"
+            className="inline-flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-800 transition hover:border-gray-500 hover:shadow-sm"
           >
             🚪 লগআউট
           </button>
         </div>
       </header>
 
-      <main className="container mx-auto p-6">
-        {/* Statistics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-          <div className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-            <p className="text-gray-600 text-sm font-semibold">মোট অর্ডার</p>
-            <p className="text-3xl font-bold text-blue-600">{stats.total}</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-            <p className="text-gray-600 text-sm font-semibold">নতুন</p>
-            <p className="text-3xl font-bold text-red-600">{stats.pending}</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-            <p className="text-gray-600 text-sm font-semibold">প্রস্তুতি</p>
-            <p className="text-3xl font-bold text-yellow-600">
-              {stats.processing}
-            </p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-            <p className="text-gray-600 text-sm font-semibold">ডেলিভারিতে</p>
-            <p className="text-3xl font-bold text-orange-600">
-              {stats.shipping}
-            </p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-            <p className="text-gray-600 text-sm font-semibold">সম্পন্ন</p>
-            <p className="text-3xl font-bold text-green-600">
-              {stats.completed}
-            </p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-            <p className="text-gray-600 text-sm font-semibold">মোট রাজস্ব</p>
-            <p className="text-2xl font-bold text-green-700">
-              ৳{stats.totalRevenue}
-            </p>
-          </div>
+      <main className="container mx-auto px-6 py-8 space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {statCards.map((item) => (
+            <div
+              key={item.label}
+              className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    {item.label}
+                  </p>
+                  <p
+                    className="text-3xl font-semibold mt-1"
+                    style={{ color: item.accent }}
+                  >
+                    {isLoading ? "..." : item.value}
+                  </p>
+                </div>
+                <div
+                  className="h-12 w-12 rounded-xl flex items-center justify-center text-xl"
+                  style={{
+                    backgroundColor: `${item.accent}15`,
+                    color: item.accent,
+                  }}
+                >
+                  {item.icon}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Tabs */}
-        <div className="flex gap-2 mb-6">
+        <div className="bg-white border border-gray-200 rounded-2xl p-2 shadow-sm inline-flex items-center gap-2">
           <button
             onClick={() => setActiveTab("orders")}
-            className={`px-6 py-2 rounded-lg font-semibold transition ${
+            className={`px-5 py-2 rounded-xl text-sm font-semibold transition ${
               activeTab === "orders"
-                ? "bg-blue-600 text-white shadow-lg"
-                : "bg-white text-gray-700 hover:bg-gray-50"
+                ? "bg-gray-900 text-white shadow-sm"
+                : "text-gray-700 hover:bg-gray-100"
             }`}
           >
             📋 অর্ডার তালিকা
           </button>
           <button
             onClick={() => setActiveTab("add")}
-            className={`px-6 py-2 rounded-lg font-semibold transition ${
+            className={`px-5 py-2 rounded-xl text-sm font-semibold transition ${
               activeTab === "add"
-                ? "bg-blue-600 text-white shadow-lg"
-                : "bg-white text-gray-700 hover:bg-gray-50"
+                ? "bg-gray-900 text-white shadow-sm"
+                : "text-gray-700 hover:bg-gray-100"
             }`}
           >
             ➕ নতুন অর্ডার
           </button>
         </div>
 
-        {/* Content */}
         {activeTab === "orders" && (
-          <div className="space-y-6">
-            {/* Filters */}
-            <div className="bg-white p-6 rounded-lg shadow">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    খুঁজুন (নাম, আইডি, ইমেইল)
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="অনুসন্ধান করুন..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    স্ট্যাটাস দ্বারা ফিল্টার করুন
-                  </label>
-                  <select
-                    value={filterStatus}
-                    onChange={(e) => setFilterStatus(e.target.value)}
-                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 outline-none bg-white"
-                  >
-                    {statuses.map((status) => (
-                      <option key={status} value={status}>
-                        {status}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+          <div className="space-y-5">
+            <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm flex flex-col md:flex-row gap-4 md:items-end">
+              <div className="flex-1">
+                <label className="block text-xs font-semibold text-gray-600 mb-2">
+                  খুঁজুন (নাম, আইডি, ইমেইল)
+                </label>
+                <input
+                  type="text"
+                  placeholder="টাইপ করে খুঁজুন..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:border-gray-500 focus:outline-none"
+                />
               </div>
-              <p className="text-sm text-gray-600 mt-3">
-                মোট পরিণত অর্ডার:{" "}
-                <span className="font-bold text-blue-600">
+              <div className="w-full md:w-64">
+                <label className="block text-xs font-semibold text-gray-600 mb-2">
+                  স্ট্যাটাস ফিল্টার
+                </label>
+                <select
+                  value={filterStatus}
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                  className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm focus:border-gray-500 focus:outline-none"
+                >
+                  {statuses.map((status) => (
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="w-full md:w-auto text-sm text-gray-500 md:text-right">
+                <p>ম্যাচড অর্ডার</p>
+                <p className="text-2xl font-semibold text-gray-900">
                   {filteredOrders.length}
-                </span>
-              </p>
+                </p>
+              </div>
             </div>
 
-            {/* Orders List */}
             <OrderList orders={filteredOrders} />
           </div>
         )}
