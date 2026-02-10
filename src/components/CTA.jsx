@@ -1,6 +1,7 @@
-const CTA = ({ onAddToCart }) => {
+const CTA = () => {
   return (
     <section className="py-16 bg-linear-to-r from-green-600 to-green-800 text-white">
+      \n{" "}
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -33,7 +34,11 @@ const CTA = ({ onAddToCart }) => {
           </div>
 
           <button
-            onClick={onAddToCart}
+            onClick={() =>
+              document
+                .getElementById("checkout")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
             className="bg-white text-green-700 px-10 py-4 rounded-lg font-bold text-xl hover:bg-green-50 transition-all duration-200 shadow-lg hover:shadow-2xl transform hover:scale-105 inline-block"
           >
             🛒 এখনই কিনুন - বিশেষ ছাড় পান

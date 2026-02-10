@@ -2,56 +2,53 @@ import {
   ArchiveBoxIcon,
   BeakerIcon,
   BoltIcon,
-  CircleStackIcon,
   ClockIcon,
-  HeartIcon,
   ScaleIcon,
   SparklesIcon,
   SunIcon,
   TrophyIcon,
-  UserIcon,
 } from "@heroicons/react/24/outline";
 
 const features = [
   {
+    number: 1,
     name: "রক্তে ওমেগা-৩ এর মাত্রা বৃদ্ধি করে",
-    icon: BeakerIcon,
   },
   {
+    number: 2,
     name: "রক্তে শর্করার মাত্রা নিয়ন্ত্রণে সহায়তা করে",
-    icon: CircleStackIcon,
   },
   {
+    number: 3,
     name: "রক্তচাপ কমাতে সহায়তা করে",
-    icon: HeartIcon,
   },
   {
+    number: 4,
     name: "ওজন নিয়ন্ত্রণে সাহায্য করে",
-    icon: ScaleIcon,
   },
   {
+    number: 5,
     name: "হজম শক্তিশালী করে",
-    icon: BoltIcon,
   },
   {
+    number: 6,
     name: "হার্টের স্বাস্থ্য ভালো রাখতে সহায়ক",
-    icon: HeartIcon,
   },
   {
+    number: 7,
     name: "শক্তি ও এনার্জি বৃদ্ধি করে",
-    icon: BoltIcon,
   },
   {
+    number: 8,
     name: "কোষ্ঠকাঠিন্য দূর করতে সাহায্য করে",
-    icon: SparklesIcon,
   },
   {
+    number: 9,
     name: "হাড় ও দাঁত মজবুত করে",
-    icon: TrophyIcon,
   },
   {
+    number: 10,
     name: "ত্বক ও চুলের স্বাস্থ্যে উপকারী",
-    icon: UserIcon,
   },
 ];
 
@@ -79,11 +76,7 @@ const Features = () => {
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               চিয়া সিডের উপকারিতা
             </p>
-            <img
-              src="/চিয়া সিড.png"
-              alt="line"
-              className="mx-auto mt-6"
-            />
+            <img src="/চিয়া সিড.png" alt="line" className="mx-auto mt-6" />
             <p className="mt-6 text-lg leading-8 text-gray-600">
               প্রাকৃতিকভাবে আপনার শরীরকে সুস্থ ও সবল রাখতে চিয়া সিডের জুড়ি
               নেই।
@@ -93,39 +86,31 @@ const Features = () => {
             {features.map((feature) => (
               <div
                 key={feature.name}
-                className="relative pl-12 pr-4 py-6 bg-green-50 rounded-lg shadow-sm hover:shadow-lg transition-shadow"
+                className="relative pl-14 pr-4 py-6 bg-green-50 rounded-lg shadow-sm hover:shadow-lg transition-shadow"
               >
                 <dt className="inline font-semibold text-gray-900">
-                  <feature.icon
-                    className="absolute left-4 top-1/2 -translate-y-1/2 h-8 w-8 text-green-600"
+                  <span
+                    className="absolute left-4 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center text-green-600 font-bold text-xl"
                     aria-hidden="true"
-                  />
+                  >
+                    {feature.number}
+                  </span>
                   {feature.name}
                 </dt>
               </div>
             ))}
           </div>
-          <div className="mt-32 text-center max-w-3xl mx-auto mb-12">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <button
-                onClick={() =>
-                  document
-                    .getElementById("pricing")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200 text-lg"
-              >
-                অর্ডার করুন
-              </button>
-              <button className="border-2 border-green-600 text-green-600 hover:bg-green-50 font-bold py-3 px-8 rounded-lg transition-colors duration-200 text-lg">
-                আরও জানুন
-              </button>
-            </div>
-
-            <div className="bg-linear-to-r from-amber-400 to-amber-500 text-white text-center font-bold text-lg sm:text-xl py-4 px-6 rounded-xl shadow-lg inline-block">
-              <p className="mb-1">সরাসরি যোগাযোগ করুন</p>
-              <p className="text-2xl">০১৭০০০০০০</p>
-            </div>
+          <div className="mt-20 text-center">
+            <button
+              onClick={() =>
+                document
+                  .getElementById("checkout")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-200 text-xl shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              🛒 এখনই অর্ডার করুন
+            </button>
           </div>
         </div>
       </div>
@@ -157,19 +142,31 @@ const Features = () => {
           </div>
         </div>
       </div>
-      <div className="bg-white py-14 sm:py-32">
+      <div className="bg-red-50 py-16">
         <div className="container mx-auto px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-3xl font-bold tracking-tight text-red-600 sm:text-4xl">
-              সতর্কতা
+          <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8 border-l-4 border-red-500">
+            <h2 className="text-3xl font-bold text-red-600 mb-4 flex items-center gap-3">
+              <span className="text-4xl">⚠️</span> সতর্কতা
             </h2>
+            <ul className="space-y-3 text-gray-700 text-lg">
+              <li className="flex items-start gap-3">
+                <span className="text-red-500 font-bold mt-1">•</span>
+                <span>
+                  যদি কোনো অ্যালার্জি থাকে, সেবনের আগে ডাক্তারের পরামর্শ নিন
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-red-500 font-bold mt-1">•</span>
+                <span>
+                  অতিরিক্ত সেবন এড়িয়ে চলুন - দৈনিক ১-২ চামচের বেশি নয়
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-red-500 font-bold mt-1">•</span>
+                <span>গর্ভবতী মায়েরা চিকিৎসকের পরামর্শ নিয়ে সেবন করুন</span>
+              </li>
+            </ul>
           </div>
-        </div>
-      </div>
-      <div className="bg-green-300 py-20">
-        <div className="container mx-auto text-center font-bold px-6 lg:px-8">
-          যদি কোনো অ্যালার্জি থাকে, সেবনের আগে ডাক্তারের পরামর্শ নিন। অতিরিক্ত
-          সেবন এড়িয়ে চলুন।
         </div>
       </div>
       <div className="bg-white py-14 sm:py-32">
@@ -201,6 +198,26 @@ const Features = () => {
             <div className="flex items-start space-x-4 p-6 bg-green-50 rounded-lg">
               <BoltIcon className="h-6 w-6 text-green-600 shrink-0 mt-1" />
               <p className="text-gray-700">ক্যাশ অন ডেলিভারি সুবিধা</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="bg-white py-16">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="text-center flex flex-col items-center">
+            <button
+              onClick={() =>
+                document
+                  .getElementById("checkout")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-200 text-xl shadow-lg hover:shadow-xl transform hover:scale-105 mb-6"
+            >
+              🛒এখনই অর্ডার করুন
+            </button>
+            <div className="bg-linear-to-r from-amber-400 to-amber-500 text-white font-bold text-lg sm:text-xl py-4 px-6 rounded-xl shadow-lg inline-block">
+              <p className="mb-1">সরাসরি যোগাযোগ করুন</p>
+              <p className="text-2xl">📞 ০১৭০০০০০০০</p>
             </div>
           </div>
         </div>

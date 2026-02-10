@@ -24,7 +24,6 @@ const Pricing = () => {
   ];
 
   const [cart, setCart] = useState([]);
-  const [showCheckout, setShowCheckout] = useState(false);
   const [customerInfo, setCustomerInfo] = useState({
     name: "",
     phone: "",
@@ -89,80 +88,73 @@ const Pricing = () => {
           address: "",
           location: "inside",
         });
-        setShowCheckout(false);
       }, 3000);
     }
   };
 
   return (
     <section
-      id="pricing"
+      id="checkout"
       className="py-16 bg-linear-to-b from-white to-green-50"
     >
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            আমাদের প্যাকেজ
-          </h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">অর্ডার করুন</h2>
           <p className="text-xl text-gray-600">
-            আপনার প্রয়োজন অনুযায়ী প্যাকেজ বেছে নিন
+            আপনার পছন্দের প্যাকেজ নির্বাচন করুন এবং অর্ডার সম্পন্ন করুন
           </p>
-        </div>
-
-        {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
-          {packages.map((pkg, index) => (
-            <div
-              key={index}
-              className="bg-white text-gray-900 border-2 border-green-200 shadow-lg rounded-2xl overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105"
-            >
-              <div className="p-8">
-                <h3 className="text-2xl font-bold mb-2">{pkg.size}</h3>
-                <p className="text-sm mb-6 text-gray-600">চিয়া সিড</p>
-
-                <div className="mb-6">
-                  <div className="flex items-baseline gap-2 mb-2">
-                    <span className="text-4xl font-bold text-green-600">
-                      ৳{pkg.price}
-                    </span>
-                    <span className="line-through text-gray-400">
-                      ৳{pkg.originalPrice}
-                    </span>
-                  </div>
-                  <p className="text-sm font-semibold text-red-600">
-                    {pkg.savings}
-                  </p>
-                </div>
-
-                <div className="space-y-3 mb-8 pb-8 border-b border-gray-200">
-                  <p className="flex items-center gap-2">
-                    <span className="text-lg">✓</span> প্রিমিয়াম কোয়ালিটি
-                  </p>
-                  <p className="flex items-center gap-2">
-                    <span className="text-lg">✓</span> ১০০% জৈব পণ্য
-                  </p>
-                  <p className="flex items-center gap-2">
-                    <span className="text-lg">✓</span> দ্রুত ডেলিভারি
-                  </p>
-                </div>
-
-                <button
-                  onClick={() => addToCart(pkg)}
-                  className="w-full py-3 bg-linear-to-r from-green-600 to-green-700 text-white font-bold text-lg rounded-lg transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-lg"
-                >
-                  <ShoppingCartIcon className="w-5 h-5" />
-                  কার্টে যোগ করুন
-                </button>
-              </div>
-            </div>
-          ))}
         </div>
 
         {/* Main Layout with Cart and Checkout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Shopping Cart */}
+          {/* Product Selection and Cart */}
           <div className="lg:col-span-2">
+            {/* Product Selection */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
+              <h2 className="text-3xl font-bold mb-6 text-gray-900">
+                প্যাকেজ নির্বাচন করুন
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {packages.map((pkg, index) => (
+                  <div
+                    key={index}
+                    className="border-2 border-green-200 rounded-xl p-6 hover:border-green-400 transition-all"
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 className="text-2xl font-bold text-gray-900">
+                          {pkg.size}
+                        </h3>
+                        <p className="text-sm text-gray-600">চিয়া সিড</p>
+                      </div>
+                      <span className="bg-red-100 text-red-600 text-xs font-bold px-3 py-1 rounded-full">
+                        {pkg.savings}
+                      </span>
+                    </div>
+                    <div className="mb-4">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-3xl font-bold text-green-600">
+                          ৳{pkg.price}
+                        </span>
+                        <span className="text-lg line-through text-gray-400">
+                          ৳{pkg.originalPrice}
+                        </span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => addToCart(pkg)}
+                      className="w-full py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-all flex items-center justify-center gap-2"
+                    >
+                      <PlusIcon className="w-5 h-5" />
+                      কার্টে যোগ করুন
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Shopping Cart */}
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
                 <ShoppingCartIcon className="w-8 h-8 text-green-600" />
@@ -171,9 +163,14 @@ const Pricing = () => {
 
               {cart.length === 0 ? (
                 <div className="text-center py-12">
-                  <ShoppingCartIcon className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-500 text-lg">
-                    আপনার কার্ট খালি। উপরে থেকে পণ্য নির্বাচন করুন।
+                  <div className="bg-gray-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-4">
+                    <ShoppingCartIcon className="w-12 h-12 text-gray-400" />
+                  </div>
+                  <p className="text-gray-600 text-lg font-semibold mb-2">
+                    আপনার কার্ট খালি
+                  </p>
+                  <p className="text-gray-500 text-sm">
+                    উপরে থেকে আপনার পছন্দের প্যাকেজ নির্বাচন করুন
                   </p>
                 </div>
               ) : (
@@ -230,56 +227,11 @@ const Pricing = () => {
 
           {/* Order Summary and Checkout */}
           <div className="lg:col-span-1">
-            {/* Order Summary */}
-            <div className="bg-green-50 rounded-2xl shadow-lg p-8 border-2 border-green-200 mb-6">
-              <h2 className="text-2xl font-bold mb-6 text-gray-900">
-                অর্ডার সারাংশ
-              </h2>
-
-              <div className="space-y-4 mb-6">
-                <div className="flex justify-between text-gray-700">
-                  <span>সাব-মোট:</span>
-                  <span className="font-bold">৳{subtotal}</span>
-                </div>
-                <div className="flex justify-between text-gray-700">
-                  <span>ডেলিভারি ফি:</span>
-                  <span className="font-bold">
-                    ৳{subtotal > 0 ? deliveryFee : 0}
-                  </span>
-                </div>
-                <div className="text-xs text-gray-500 -mt-2">
-                  {subtotal > 0 && (
-                    <>
-                      {customerInfo.location === "inside"
-                        ? "ঢাকার ভিতরে"
-                        : "ঢাকার বাইরে"}
-                    </>
-                  )}
-                </div>
-                <div className="border-t-2 border-green-200 pt-4 flex justify-between text-lg font-bold text-green-700">
-                  <span>মোট:</span>
-                  <span>৳{total}</span>
-                </div>
-              </div>
-
-              <button
-                onClick={() => setShowCheckout(!showCheckout)}
-                disabled={cart.length === 0}
-                className={`w-full py-3 rounded-lg font-bold text-lg transition-all duration-200 ${
-                  cart.length === 0
-                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : "bg-linear-to-r from-green-600 to-green-700 text-white hover:shadow-lg"
-                }`}
-              >
-                চেকআউট করুন
-              </button>
-            </div>
-
             {/* Checkout Form */}
-            {showCheckout && (
-              <div className="bg-white rounded-2xl shadow-lg p-8 border-2 border-green-300">
+            {
+              <div className="bg-white rounded-2xl shadow-lg p-8">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900">
-                  ডেলিভারি তথ্য
+                  চেকআউট
                 </h2>
 
                 {orderPlaced ? (
@@ -293,109 +245,150 @@ const Pricing = () => {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleCheckout} className="space-y-4">
-                    <div>
-                      <label className="block text-gray-700 font-bold mb-2">
-                        নাম *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={customerInfo.name}
-                        onChange={(e) =>
-                          setCustomerInfo({
-                            ...customerInfo,
-                            name: e.target.value,
-                          })
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-                        placeholder="আপনার নাম"
-                      />
+                  <form onSubmit={handleCheckout} className="space-y-6">
+                    {/* Order Summary */}
+                    <div className="bg-green-50 rounded-lg p-6 border-2 border-green-200">
+                      <h3 className="text-xl font-bold mb-4 text-gray-900">
+                        অর্ডার সারাংশ
+                      </h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between text-gray-700">
+                          <span>পণ্যমূল্য:</span>
+                          <span className="font-bold">৳{subtotal}</span>
+                        </div>
+                        <div>
+                          <div className="flex justify-between text-gray-700">
+                            <span>ডেলিভারি চার্জ:</span>
+                            <span className="font-bold">
+                              ৳{subtotal > 0 ? deliveryFee : 0}
+                            </span>
+                          </div>
+                          <div className="text-xs text-gray-500 mt-1">
+                            {subtotal > 0 && (
+                              <>
+                                {customerInfo.location === "inside"
+                                  ? "(ঢাকার ভিতরে - ৳80)"
+                                  : "(ঢাকার বাইরে - ৳150)"}
+                              </>
+                            )}
+                          </div>
+                        </div>
+                        <div className="border-t-2 border-green-300 pt-3 flex justify-between text-xl font-bold text-green-700">
+                          <span>সর্বমোট:</span>
+                          <span>৳{total}</span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div>
-                      <label className="block text-gray-700 font-bold mb-2">
-                        ফোন নম্বর *
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        value={customerInfo.phone}
-                        onChange={(e) =>
-                          setCustomerInfo({
-                            ...customerInfo,
-                            phone: e.target.value,
-                          })
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-                        placeholder="०१XXXXXXXXX"
-                      />
+                    {/* Customer Information */}
+                    <div className="space-y-4">
+                      <h3 className="text-xl font-bold mb-4 text-gray-900">
+                        ডেলিভারি তথ্য
+                      </h3>
+                      <div>
+                        <label className="block text-gray-700 font-bold mb-2">
+                          নাম *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={customerInfo.name}
+                          onChange={(e) =>
+                            setCustomerInfo({
+                              ...customerInfo,
+                              name: e.target.value,
+                            })
+                          }
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                          placeholder="আপনার নাম"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-gray-700 font-bold mb-2">
+                          ফোন নম্বর *
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          value={customerInfo.phone}
+                          onChange={(e) =>
+                            setCustomerInfo({
+                              ...customerInfo,
+                              phone: e.target.value,
+                            })
+                          }
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                          placeholder="০১৭XXXXXXXX"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-gray-700 font-bold mb-2">
+                          ডেলিভারি এলাকা *
+                        </label>
+                        <select
+                          required
+                          value={customerInfo.location}
+                          onChange={(e) =>
+                            setCustomerInfo({
+                              ...customerInfo,
+                              location: e.target.value,
+                            })
+                          }
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                        >
+                          <option value="inside">
+                            ঢাকার ভিতরে (ডেলিভারি চার্জ: ৳80)
+                          </option>
+                          <option value="outside">
+                            ঢাকার বাইরে (ডেলিভারি চার্জ: ৳150)
+                          </option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-gray-700 font-bold mb-2">
+                          ডেলিভারি ঠিকানা *
+                        </label>
+                        <textarea
+                          required
+                          value={customerInfo.address}
+                          onChange={(e) =>
+                            setCustomerInfo({
+                              ...customerInfo,
+                              address: e.target.value,
+                            })
+                          }
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                          placeholder="সম্পূর্ণ ডেলিভারি ঠিকানা"
+                          rows="3"
+                        ></textarea>
+                      </div>
                     </div>
 
-                    <div>
-                      <label className="block text-gray-700 font-bold mb-2">
-                        ডেলিভারি এলাকা *
-                      </label>
-                      <select
-                        required
-                        value={customerInfo.location}
-                        onChange={(e) =>
-                          setCustomerInfo({
-                            ...customerInfo,
-                            location: e.target.value,
-                          })
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-                      >
-                        <option value="inside">
-                          ঢাকার ভিতরে (ডেলিভারি চার্জ: ৳80)
-                        </option>
-                        <option value="outside">
-                          ঢাকার বাইরে (ডেলিভারি চার্জ: ৳150)
-                        </option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-gray-700 font-bold mb-2">
-                        ডেলিভারি ঠিকানা *
-                      </label>
-                      <textarea
-                        required
-                        value={customerInfo.address}
-                        onChange={(e) =>
-                          setCustomerInfo({
-                            ...customerInfo,
-                            address: e.target.value,
-                          })
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-                        placeholder="সম্পূর্ণ ডেলিভারি ঠিকানা"
-                        rows="3"
-                      ></textarea>
-                    </div>
-
-                    <div className="bg-blue-50 border border-blue-300 rounded-lg p-4 mt-4">
-                      <p className="text-sm text-blue-700">
-                        <span className="font-bold">📍 পেমেন্ট পদ্ধতি:</span>{" "}
+                    <div className="bg-blue-50 border border-blue-300 rounded-lg p-4">
+                      <p className="text-sm text-blue-700 flex items-center gap-2">
+                        <span className="font-bold">📍 পেমেন্ট পদ্ধতি:</span>
                         ক্যাশ অন ডেলিভারি (COD)
-                      </p>
-                      <p className="text-sm text-blue-700 mt-2">
-                        <span className="font-bold">🚚 ডেলিভারি চার্জ:</span>{" "}
-                        {customerInfo.location === "inside" ? "৳80" : "৳150"}
                       </p>
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full py-3 bg-linear-to-r from-green-600 to-green-700 text-white font-bold text-lg rounded-lg hover:shadow-lg transition-all duration-200 mt-6"
+                      disabled={cart.length === 0}
+                      className={`w-full py-4 font-bold text-lg rounded-lg transition-all duration-200 ${
+                        cart.length === 0
+                          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                          : "bg-linear-to-r from-green-600 to-green-700 text-white hover:shadow-lg"
+                      }`}
                     >
-                      অর্ডার নিশ্চিত করুন
+                      অর্ডার নিশ্চিত করুন (৳{total})
                     </button>
                   </form>
                 )}
               </div>
-            )}
+            }
           </div>
         </div>
 

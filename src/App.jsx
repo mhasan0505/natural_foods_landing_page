@@ -21,8 +21,7 @@ const ProtectedRoute = ({ isAuthenticated, children }) => {
   return children;
 };
 
-const HomePage = ({ onAddToCart }) => {
-
+const HomePage = () => {
   return (
     <div className="bg-white min-h-screen">
       <header className="p-4 top-0 z-50 shadow-lg">
@@ -42,10 +41,10 @@ const HomePage = ({ onAddToCart }) => {
       </header>
 
       <main>
-        <Hero onAddToCart={onAddToCart} />
+        <Hero />
         <Features />
         <Reviews />
-        <Pricing onAddToCart={onAddToCart} />
+        <Pricing />
       </main>
 
       <Footer />
@@ -54,7 +53,6 @@ const HomePage = ({ onAddToCart }) => {
 };
 
 const AppRoutes = () => {
-  const [cartCount, setCartCount] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(
     () => localStorage.getItem("adminAuth") === "true",
   );
@@ -111,10 +109,6 @@ const AppRoutes = () => {
     };
   }, [API_URL]);
 
-  const handleAddToCart = () => {
-    setCartCount(cartCount + 1);
-  };
-
   const handleAddOrder = async (newOrder) => {
     try {
       const response = await fetch(`${API_URL}/orders`, {
@@ -153,7 +147,7 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage onAddToCart={handleAddToCart} />} />
+      <Route path="/" element={<HomePage />} />
       <Route
         path="/admin-login"
         element={

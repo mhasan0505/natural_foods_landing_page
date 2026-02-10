@@ -76,13 +76,25 @@ const Footer = () => {
               <p>📧 info@naturalsfoodsbd.com</p>
               <p>📍 ঢাকা, বাংলাদেশ</p>
               <div className="flex gap-4 mt-4">
-                <a href="#" className="hover:text-green-500 transition text-xl">
-                  f
+                <a
+                  href="#"
+                  className="hover:text-green-500 transition text-2xl"
+                  title="Facebook"
+                >
+                  📘
                 </a>
-                <a href="#" className="hover:text-green-500 transition text-xl">
-                  🐦
+                <a
+                  href="#"
+                  className="hover:text-green-500 transition text-2xl"
+                  title="WhatsApp"
+                >
+                  💬
                 </a>
-                <a href="#" className="hover:text-green-500 transition text-xl">
+                <a
+                  href="#"
+                  className="hover:text-green-500 transition text-2xl"
+                  title="Instagram"
+                >
                   📷
                 </a>
               </div>

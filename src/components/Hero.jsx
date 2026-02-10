@@ -30,20 +30,17 @@ const Hero = () => {
             </video>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+          <div className="flex justify-center mb-8">
             <button
               type="button"
               onClick={() =>
                 document
-                  .getElementById("pricing")
+                  .getElementById("checkout")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200 text-lg"
+              className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-200 text-xl shadow-lg hover:shadow-xl transform hover:scale-105"
             >
-              অর্ডার করুন
-            </button>
-            <button className="border-2 border-green-600 text-green-600 hover:bg-green-50 font-bold py-3 px-8 rounded-lg transition-colors duration-200 text-lg">
-              আরও জানুন
+              🛒 এখনই অর্ডার করুন
             </button>
           </div>
 
