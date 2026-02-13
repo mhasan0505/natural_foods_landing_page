@@ -21,27 +21,6 @@ const Reviews = () => {
       comment:
         "অসাধারণ পণ্য এবং গ্রাহক সেবা। আমার পরিবারের সবাই খাচ্ছি এবং খুব সন্তুষ্ট।",
     },
-    {
-      name: "রহিম সাহেব",
-      location: "খুলনা",
-      rating: 5,
-      comment:
-        "আমি ৩ মাস ধরে চিয়া সিড খাচ্ছি এবং অনেক পরিবর্তন দেখেছি। সত্যিই দুর্দান্ত!",
-    },
-    {
-      name: "নাজমা আক্তার",
-      location: "রাজশাহী",
-      rating: 5,
-      comment:
-        "জৈব এবং খাঁটি পণ্য। আমার শরীরের ওজন নিয়ন্ত্রণে সাহায্য করেছে। সুপারিশ করি!",
-    },
-    {
-      name: "আহমেদ আলী",
-      location: "বরিশাল",
-      rating: 5,
-      comment:
-        "দারুণ সেবা এবং দ্রুত ডেলিভারি। আমার শক্তি বৃদ্ধি পেয়েছে এবং ফিটনেস উন্নত হয়েছে।",
-    },
   ];
 
   return (
@@ -78,17 +57,6 @@ const Reviews = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="mt-12 bg-linear-to-r from-green-100 to-emerald-100 rounded-xl p-8 text-center border-2 border-green-300">
-          <p className="text-gray-700 mb-4">
-            <span className="text-2xl">🌟</span>{" "}
-            <strong>২,৩৪৫+ সন্তুষ্ট গ্রাহক</strong>
-          </p>
-          <p className="text-gray-700">
-            আমরা গর্বিত যে আমাদের গ্রাহকরা আমাদের পণ্যে সন্তুষ্ট এবং তাদের
-            বন্ধুদের কাছে সুপারিশ করছেন।
-          </p>
         </div>
       </div>
     </section>

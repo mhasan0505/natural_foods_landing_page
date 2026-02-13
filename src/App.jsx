@@ -25,7 +25,7 @@ const HomePage = () => {
   return (
     <div className="bg-white min-h-screen">
       <header className="p-4 top-0 z-50 shadow-lg">
-        <div className="container mx-auto flex justify-between items-center">
+        <div className="container mx-auto flex justify-center items-center">
           <img
             src="/logo.png"
             alt="Natural Foods Logo"
