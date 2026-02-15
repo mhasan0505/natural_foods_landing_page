@@ -56,15 +56,25 @@ const AdminDashboard = ({
     <div className="min-h-screen bg-[#f6f7fb] text-gray-900">
       <header className="bg-white border-b border-gray-200">
         <div className="container mx-auto flex items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-lg bg-gray-900 text-white flex items-center justify-center font-bold">
-              NF
+          <div className="flex items-center gap-4">
+            <div className="relative h-12 w-12 overflow-hidden rounded-2xl border border-emerald-200 shadow-sm">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.35),transparent_60%)]" />
+              <img
+                src="/logo.png"
+                alt="Natural Foods logo"
+                className="relative z-10 h-full w-full object-contain p-1.5"
+              />
             </div>
-            <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-gray-500">
-                Dashboard
+            <div className="space-y-0.5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-emerald-700">
+                Dashboard Panel
               </p>
-              <h1 className="text-xl font-semibold">অর্ডার কন্ট্রোল সেন্টার</h1>
+              <h1 className="text-lg font-bold text-gray-900 sm:text-xl">
+                অর্ডার কন্ট্রোল সেন্টার
+              </h1>
+              <p className="text-xs text-gray-500">
+                Real-time order tracking and management
+              </p>
             </div>
           </div>
           <button
