@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
-const Pricing = () => {
+const Pricing = ({ onAddOrder }) => {
   const packages = [
     {
       size: "৫০০ গ্রাম",
@@ -31,6 +31,7 @@ const Pricing = () => {
     location: "inside", // "inside" for Dhaka, "outside" for outside Dhaka
   });
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const addToCart = (pkg) => {
     const existingItem = cart.find((item) => item.size === pkg.size);
@@ -70,7 +71,7 @@ const Pricing = () => {
     subtotal > 0 ? (customerInfo.location === "inside" ? 80 : 150) : 0;
   const total = subtotal + deliveryFee;
 
-  const handleCheckout = (e) => {
+  const handleCheckout = async (e) => {
     e.preventDefault();
     if (
       customerInfo.name &&
@@ -78,17 +79,43 @@ const Pricing = () => {
       customerInfo.address &&
       cart.length > 0
     ) {
-      setOrderPlaced(true);
-      setTimeout(() => {
-        setOrderPlaced(false);
-        setCart([]);
-        setCustomerInfo({
-          name: "",
-          phone: "",
-          address: "",
-          location: "inside",
-        });
-      }, 3000);
+      setIsSubmitting(true);
+      try {
+        // Submit each cart item as a separate order
+        for (const item of cart) {
+          const orderData = {
+            customer: customerInfo.name,
+            email: "N/A",
+            phone: customerInfo.phone,
+            address: `${customerInfo.address} (${customerInfo.location === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে"})`,
+            product: `চিয়া সিড ${item.size}`,
+            quantity: item.quantity,
+            amount: item.price * item.quantity + deliveryFee / cart.length, // Split delivery cost
+            status: "নতুন অর্ডার",
+          };
+
+          if (onAddOrder) {
+            await onAddOrder(orderData);
+          }
+        }
+
+        setOrderPlaced(true);
+        setTimeout(() => {
+          setOrderPlaced(false);
+          setCart([]);
+          setCustomerInfo({
+            name: "",
+            phone: "",
+            address: "",
+            location: "inside",
+          });
+        }, 3000);
+      } catch (error) {
+        console.error("Failed to place order:", error);
+        alert("অর্ডার সাবমিট করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -376,14 +403,16 @@ const Pricing = () => {
 
                     <button
                       type="submit"
-                      disabled={cart.length === 0}
+                      disabled={cart.length === 0 || isSubmitting}
                       className={`w-full py-4 font-bold text-lg rounded-lg transition-all duration-200 ${
-                        cart.length === 0
+                        cart.length === 0 || isSubmitting
                           ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                           : "bg-linear-to-r from-green-600 to-green-700 text-white hover:shadow-lg"
                       }`}
                     >
-                      অর্ডার নিশ্চিত করুন (৳{total})
+                      {isSubmitting
+                        ? "⏳ অর্ডার সাবমিট হচ্ছে..."
+                        : `অর্ডার নিশ্চিত করুন (৳${total})`}
                     </button>
                   </form>
                 )}

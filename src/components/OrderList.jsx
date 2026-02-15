@@ -1,7 +1,7 @@
 import { useState } from "react";
 import OrderDetail from "./OrderDetail";
 
-const OrderList = ({ orders }) => {
+const OrderList = ({ orders, onUpdateOrder, onDeleteOrder }) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const getStatusColor = (status) => {
@@ -39,6 +39,8 @@ const OrderList = ({ orders }) => {
       <OrderDetail
         order={selectedOrder}
         onBack={() => setSelectedOrder(null)}
+        onUpdate={onUpdateOrder}
+        onDelete={onDeleteOrder}
       />
     );
   }

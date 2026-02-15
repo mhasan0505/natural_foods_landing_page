@@ -6,8 +6,10 @@ import mongoose from "mongoose";
 import process from "node:process";
 import Order from "./models/Order.js";
 import createOrdersRouter, { serializeOrder } from "./routes/orders.js";
+import createProductsRouter from "./routes/products.js";
 
 dotenv.config();
+dotenv.config({ path: ".env.local", override: true });
 
 const app = express();
 app.use(cors());
@@ -39,6 +41,7 @@ app.get("/health", (_req, res) => {
 });
 
 app.use("/orders", createOrdersRouter({ broadcast, addClient, removeClient }));
+app.use("/products", createProductsRouter());
 
 let changeStreamActive = false;
 let replicaSetWarningShown = false;

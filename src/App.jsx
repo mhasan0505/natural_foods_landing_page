@@ -21,7 +21,7 @@ const ProtectedRoute = ({ isAuthenticated, children }) => {
   return children;
 };
 
-const HomePage = () => {
+const HomePage = ({ onAddOrder }) => {
   return (
     <div className="bg-white min-h-screen">
       <header className="p-4 top-0 z-50 shadow-lg">
@@ -44,7 +44,7 @@ const HomePage = () => {
         <Hero />
         <Features />
         <Reviews />
-        <Pricing />
+        <Pricing onAddOrder={onAddOrder} />
       </main>
 
       <Footer />
@@ -128,6 +128,44 @@ const AppRoutes = () => {
     }
   };
 
+  const handleUpdateOrder = async (orderId, updates) => {
+    try {
+      const response = await fetch(`${API_URL}/orders/${orderId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updates),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update order");
+      }
+
+      const updatedOrder = await response.json();
+      // SSE will handle updating the state
+      return updatedOrder;
+    } catch (error) {
+      console.error("Failed to update order:", error);
+      throw error;
+    }
+  };
+
+  const handleDeleteOrder = async (orderId) => {
+    try {
+      const response = await fetch(`${API_URL}/orders/${orderId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete order");
+      }
+
+      // SSE will handle removing from state
+    } catch (error) {
+      console.error("Failed to delete order:", error);
+      throw error;
+    }
+  };
+
   const handleAdminLogin = (password) => {
     const ADMIN_PASSWORD = "admin123";
     if (password === ADMIN_PASSWORD) {
@@ -147,7 +185,7 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<HomePage onAddOrder={handleAddOrder} />} />
       <Route
         path="/admin-login"
         element={
@@ -161,6 +199,8 @@ const AppRoutes = () => {
             <AdminDashboard
               orders={orders}
               onAddOrder={handleAddOrder}
+              onUpdateOrder={handleUpdateOrder}
+              onDeleteOrder={handleDeleteOrder}
               onLogout={handleAdminLogout}
               isLoading={isLoading}
             />

@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-const OrderDetail = ({ order, onBack }) => {
+const OrderDetail = ({ order, onBack, onUpdate, onDelete }) => {
   const [status, setStatus] = useState(order.status);
   const [notes, setNotes] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const statuses = [
     "নতুন অর্ডার",
@@ -149,16 +150,32 @@ const OrderDetail = ({ order, onBack }) => {
 
           <div className="flex flex-col md:flex-row gap-3">
             <button
-              onClick={() => {
-                alert(`স্ট্যাটাস আপডেট হয়েছে: ${status}`);
+              onClick={async () => {
+                if (!onUpdate) {
+                  alert(`স্ট্যাটাস আপডেট হয়েছে: ${status}`);
+                  return;
+                }
+
+                setIsSaving(true);
+                try {
+                  await onUpdate(order.id, { status, notes });
+                  alert(`✅ স্ট্যাটাস সফলভাবে আপডেট হয়েছে: ${status}`);
+                  onBack();
+                } catch (error) {
+                  alert("❌ স্ট্যাটাস আপডেট ব্যর্থ হয়েছে। আবার চেষ্টা করুন।");
+                } finally {
+                  setIsSaving(false);
+                }
               }}
-              className="flex-1 rounded-lg bg-gray-900 text-white px-6 py-3 text-sm font-semibold hover:bg-black transition"
+              disabled={isSaving}
+              className="flex-1 rounded-lg bg-gray-900 text-white px-6 py-3 text-sm font-semibold hover:bg-black transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              💾 পরিবর্তন সংরক্ষণ করুন
+              {isSaving ? "⏳ সংরক্ষণ হচ্ছে..." : "💾 পরিবর্তন সংরক্ষণ করুন"}
             </button>
             <button
               onClick={() => setNotes("")}
-              className="flex-1 rounded-lg border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-800 hover:border-gray-500 transition"
+              disabled={isSaving}
+              className="flex-1 rounded-lg border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-800 hover:border-gray-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               🔄 রিসেট করুন
             </button>

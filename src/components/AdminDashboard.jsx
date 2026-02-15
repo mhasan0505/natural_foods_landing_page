@@ -2,7 +2,14 @@ import { useState } from "react";
 import OrderForm from "./OrderForm";
 import OrderList from "./OrderList";
 
-const AdminDashboard = ({ orders, onAddOrder, onLogout, isLoading }) => {
+const AdminDashboard = ({
+  orders,
+  onAddOrder,
+  onUpdateOrder,
+  onDeleteOrder,
+  onLogout,
+  isLoading,
+}) => {
   const [activeTab, setActiveTab] = useState("orders");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("সব");
@@ -164,7 +171,11 @@ const AdminDashboard = ({ orders, onAddOrder, onLogout, isLoading }) => {
               </div>
             </div>
 
-            <OrderList orders={filteredOrders} />
+            <OrderList
+              orders={filteredOrders}
+              onUpdateOrder={onUpdateOrder}
+              onDeleteOrder={onDeleteOrder}
+            />
           </div>
         )}
 

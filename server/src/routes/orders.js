@@ -80,6 +80,47 @@ const createOrdersRouter = ({ broadcast, addClient, removeClient }) => {
     });
   });
 
+  router.patch("/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updates = req.body;
+
+      const order = await Order.findByIdAndUpdate(
+        id,
+        { $set: updates },
+        { new: true, runValidators: true },
+      );
+
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+
+      const payload = { type: "order-updated", data: serializeOrder(order) };
+      broadcast(payload);
+      return res.json(payload.data);
+    } catch (error) {
+      console.error("Error updating order:", error);
+      return res.status(500).json({ message: "Failed to update order" });
+    }
+  });
+
+  router.delete("/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const order = await Order.findByIdAndDelete(id);
+
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+
+      broadcast({ type: "order-deleted", data: { id } });
+      return res.json({ message: "Order deleted" });
+    } catch (error) {
+      console.error("Error deleting order:", error);
+      return res.status(500).json({ message: "Failed to delete order" });
+    }
+  });
+
   return router;
 };
 
