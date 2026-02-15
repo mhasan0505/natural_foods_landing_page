@@ -60,7 +60,7 @@ const AppRoutes = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+  const API_URL = import.meta.env.VITE_API_URL || "/api";
 
   // Fetch orders from backend on mount
   useEffect(() => {
