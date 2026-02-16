@@ -116,7 +116,7 @@ const Features = () => {
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               চিয়া সিডের উপকারিতা
             </p>
-            <img src="/চিয়া সিড.png" alt="line" className="mx-auto mt-6" />
+            <img src="/চিয়া সিড.jpeg" alt="line" className="mx-auto mt-6" />
             <p className="mt-6 text-lg leading-8 text-gray-600">
               প্রাকৃতিকভাবে আপনার শরীরকে সুস্থ ও সবল রাখতে চিয়া সিডের জুড়ি
               নেই।
@@ -140,17 +140,21 @@ const Features = () => {
               </div>
             ))}
           </div>
-          <div className="mt-20 text-center">
+          <div className="text-center flex flex-col items-center mt-10">
             <button
               onClick={() =>
                 document
                   .getElementById("checkout")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-200 text-xl shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-200 text-xl shadow-lg hover:shadow-xl transform hover:scale-105 mb-6"
             >
-              🛒 এখনই অর্ডার করুন
+              🛒এখনই অর্ডার করুন
             </button>
+            <div className="bg-linear-to-r from-amber-400 to-amber-500 text-white font-bold text-lg sm:text-xl py-4 px-6 rounded-xl shadow-lg inline-block">
+              <p className="mb-1">সরাসরি যোগাযোগ করুন</p>
+              <p className="text-2xl">📞 ০১৬১১৮১৭৮২৪০</p>
+            </div>
           </div>
         </div>
       </div>
@@ -257,7 +261,7 @@ const Features = () => {
             </button>
             <div className="bg-linear-to-r from-amber-400 to-amber-500 text-white font-bold text-lg sm:text-xl py-4 px-6 rounded-xl shadow-lg inline-block">
               <p className="mb-1">সরাসরি যোগাযোগ করুন</p>
-              <p className="text-2xl">📞 ০১৭০০০০০০০</p>
+              <p className="text-2xl">📞 ০১৬১১৮১৭৮২৪০</p>
             </div>
           </div>
         </div>

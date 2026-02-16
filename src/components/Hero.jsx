@@ -46,7 +46,7 @@ const Hero = () => {
 
           <div className="bg-linear-to-r from-amber-400 to-amber-500 text-white font-bold text-lg sm:text-xl py-4 px-6 rounded-xl shadow-lg inline-block">
             <p className="mb-1">সরাসরি যোগাযোগ করুন</p>
-            <p className="text-2xl">০১৭০০০০০০</p>
+            <p className="text-2xl">০১৬১১৮১৭৮২৪</p>
           </div>
         </div>
       </div>

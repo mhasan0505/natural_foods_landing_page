@@ -21,65 +21,87 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Payment Methods */}
           <div>
-            <h4 className="text-lg font-bold mb-4">দ্রুত লিঙ্ক</h4>
-            <ul className="space-y-2 text-gray-700">
-              <li>
-                <a href="#" className="hover:text-green-500 transition">
-                  হোম
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-green-500 transition">
-                  পণ্য
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-green-500 transition">
-                  সম্পর্কে
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-green-500 transition">
-                  যোগাযোগ
-                </a>
-              </li>
-            </ul>
+            <h4 className="text-lg font-bold mb-4">পেমেন্ট অপশন</h4>
+            <div className="space-y-3">
+              <p className="text-gray-700 text-sm mb-3">আমরা গ্রহণ করি:</p>
+              <div className="grid grid-cols-3 gap-3">
+                {/* bKash */}
+                <div className="bg-white p-2 rounded border border-gray-200 flex items-center justify-center hover:shadow-md transition">
+                  <img
+                    src="/bkash.png"
+                    alt="bKash"
+                    className="h-6 w-auto object-contain"
+                  />
+                </div>
+                {/* Nagad */}
+                <div className="bg-white p-2 rounded border border-gray-200 flex items-center justify-center hover:shadow-md transition">
+                  <img
+                    src="/nagad.png"
+                    alt="Nagad"
+                    className="h-6 w-auto object-contain"
+                  />
+                </div>
+                {/* Visa */}
+                <div className="bg-white p-2 rounded border border-gray-200 flex items-center justify-center hover:shadow-md transition">
+                  <img
+                    src="/visa.png"
+                    alt="Visa"
+                    className="h-6 w-auto object-contain"
+                  />
+                </div>
+                {/* Mastercard */}
+                <div className="bg-white p-2 rounded border border-gray-200 flex items-center justify-center hover:shadow-md transition">
+                  <img
+                    src="/mastercard.png"
+                    alt="Mastercard"
+                    className="h-6 w-auto object-contain"
+                  />
+                </div>
+                {/* American Express */}
+                <div className="bg-white p-2 rounded border border-gray-200 flex items-center justify-center hover:shadow-md transition">
+                  <img
+                    src="/americanexpress.png"
+                    alt="American Express"
+                    className="h-6 w-auto object-contain"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Customer Service */}
+          {/* Delivery Partners */}
           <div>
-            <h4 className="text-lg font-bold mb-4">গ্রাহক সেবা</h4>
-            <ul className="space-y-2 text-gray-700">
-              <li>
-                <a href="#" className="hover:text-green-500 transition">
-                  ডেলিভারি নীতি
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-green-500 transition">
-                  রিটার্ন নীতি
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-green-500 transition">
-                  শর্তাবলী
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-green-500 transition">
-                  গোপনীয়তা নীতি
-                </a>
-              </li>
-            </ul>
+            <h4 className="text-lg font-bold mb-4">ডেলিভারি পার্টনার</h4>
+            <div className="space-y-3">
+              <p className="text-gray-700 text-sm mb-3">আমরা কাজ করি:</p>
+              <div className="space-y-3">
+                {/* Pathao */}
+                <div className="bg-white p-3 rounded border border-gray-200 hover:shadow-md transition">
+                  <img
+                    src="/pathao_courier.png"
+                    alt="Pathao Courier"
+                    className="h-12 w-auto object-contain"
+                  />
+                </div>
+                {/* Steadfast */}
+                <div className="bg-white p-3 rounded border border-gray-200 hover:shadow-md transition">
+                  <img
+                    src="/steadfast.png"
+                    alt="Steadfast Courier"
+                    className="h-8 w-auto object-contain"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Contact */}
           <div>
             <h4 className="text-lg font-bold mb-4">যোগাযোগ করুন</h4>
             <div className="space-y-2 text-gray-700">
-              <p>📞 +৮৮ ০১৭০০০০০০</p>
+              <p>📞 +৮৮ ০১৬১১৮১৭৮২৪</p>
               <p>📧 info@naturalsfoodsbd.com</p>
               <p>📍 ঢাকা, বাংলাদেশ</p>
               <div className="flex gap-4 mt-4">
