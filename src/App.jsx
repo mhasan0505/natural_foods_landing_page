@@ -42,6 +42,7 @@ const HomePage = ({ onAddOrder }) => {
 
       <main>
         <Hero />
+        <Pricing onAddOrder={onAddOrder} />
         <Features />
         <Reviews />
         <Pricing onAddOrder={onAddOrder} />
